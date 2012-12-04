@@ -23,6 +23,7 @@ class MT940
       @raw.each_with_index do |line, i|
         next unless line.class == MT940::StatementLine
         ensure_is_info_line!(@raw[i+1])
+        puts "#{@raw[i+1].class}"
         @statement_lines << StatementLineBundle.new(@raw[i], @raw[i+1])
       end
     end
@@ -48,14 +49,16 @@ class MT940
   class StatementLineBundle
 
     METHOD_MAP = {
-      :amount         => :line,
-      :funds_code     => :line,
-      :value_date     => :line,
-      :entry_date     => :line,
-      :account_holder => :info,
-      :details        => :info,
-      :account_number => :info,
-      :bank_code      => :info,
+      :amount                   => :line,
+      :funds_code               => :line,
+      :value_date               => :line,
+      :entry_date               => :line,
+      :account_holder           => :info,
+      :details                  => :info,
+      :account_number           => :info,
+      :bank_code                => :info,
+      :code                     => :info,
+      :transaction_description  => :info
     }
 
     def initialize(statement_line, statement_line_info)
